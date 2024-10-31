@@ -40,6 +40,9 @@ class AStealthGameCharacter : public ACharacter
 public:
 	AStealthGameCharacter();
 
+	UPROPERTY(VisibleAnywhere ,BlueprintReadOnly, Category="Gameplay")
+	bool IsCarryingObjective;
+
 protected:
 	virtual void BeginPlay();
 
