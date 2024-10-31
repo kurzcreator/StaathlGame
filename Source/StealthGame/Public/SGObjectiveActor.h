@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NiagaraSystem.h"
 #include "GameFramework/Actor.h"
 #include "SGObjectiveActor.generated.h"
 
 class USphereComponent;
+class UNiagaraSystem;
 
 UCLASS()
 class STEALTHGAME_API ASGObjectiveActor : public AActor
@@ -24,12 +26,17 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USphereComponent* SphereComponent; // for collision
-	
-	// Called when the game starts or when spawned
+
+	UPROPERTY(EditDefaultsOnly, Category = "FX")
+	UNiagaraSystem* FXNiagara;
+
 	virtual void BeginPlay() override;
+
+	void PlayEffect();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 };
