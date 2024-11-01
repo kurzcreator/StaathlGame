@@ -21,31 +21,28 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* MeshComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components")
+	float GravityForce = -4500.0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Components")
+	float RadiusGravitySphere = 4000;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Components")
+	float RadiusHorizonEventSphere = 190;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USphereComponent* GravitySphereComponent;
+	TObjectPtr<UStaticMeshComponent> MeshComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USphereComponent* EventHorizonSphere;
+	TObjectPtr<USphereComponent> GravitySphereComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<USphereComponent> EventHorizonSphere;
 
 public:
-	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
-
 	virtual void Tick(float DeltaSeconds) override;
 
 private:
 	UFUNCTION()
-	void DestroyGravityObject(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	                          UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-	                          const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void GravityCapture(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	                    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void EndGravityCapture(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	                       int32 OtherBodyIndex);
+	void DestroyGravityObject(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
 };
